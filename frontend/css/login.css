@@ -1,0 +1,29 @@
+/* Estilos propios del login; el resto viene de registro.css */
+
+.olvido {
+  align-self: flex-end;
+  font-size: 12px;
+  color: #666;
+  text-decoration: none;
+}
+
+.olvido:hover {
+  text-decoration: underline;
+}
+
+.cambio {
+  margin-top: 18px;
+  font-size: 13px;
+  color: #666;
+}
+
+.cambio a {
+  color: var(--texto);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 2px solid var(--amarillo);
+}
+
+.cambio a:hover {
+  background: var(--amarillo);
+}

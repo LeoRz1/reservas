@@ -1,0 +1,126 @@
+:root {
+  --amarillo: #ffda34;
+  --gris: #e8e5e5;
+  --texto: #222;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  
+}
+
+.card {
+  width: 100%;
+  max-width: 360px;
+  padding: 32px 28px;
+  background: #fafafa;
+  border: 1px solid #333;
+  border-radius: 14px;
+  text-align: center;
+}
+
+.logo {
+  width: 90px;
+  height: auto;
+  margin-bottom: 18px;
+}
+
+.titulo {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--amarillo);
+  margin-bottom: 22px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.formulario input {
+  width: 100%;
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--texto);
+  background: #fff;
+  border: 1px solid #222;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.formulario input::placeholder {
+  color: #aaa;
+}
+
+.formulario input:focus {
+  border-color: var(--amarillo);
+  box-shadow: 0 0 0 3px rgba(255, 218, 52, 0.4);
+}
+
+/* Teléfono con prefijo */
+.telefono {
+  display: flex;
+  gap: 6px;
+}
+
+.prefijo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  font-size: 14px;
+  color: #666;
+  background: #fff;
+  border: 1px solid #222;
+  border-radius: 8px;
+}
+
+.bandera {
+  width: 22px;
+  height: 16px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    #fcd116 0 50%,
+    #003893 50% 75%,
+    #ce1126 75% 100%
+  );
+}
+
+/* Botón */
+.btn {
+  align-self: center;
+  margin-top: 8px;
+  padding: 7px 22px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--texto);
+  background: var(--amarillo);
+  border: 1px solid #222;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:hover {
+  background: #f5cc10;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}

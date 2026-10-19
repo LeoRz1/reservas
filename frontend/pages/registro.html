@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Registro - Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/frontend/css/registro.css">
+</head>
+<body>
+  <main class="card">
+    <img class="logo" src="/frontend/images/home-logo-sin-fondo.svg" alt="Logo Home">
+
+    <h1 class="titulo">Registra tus datos</h1>
+
+    <form class="formulario" action="#" method="post">
+      <input type="text" name="nombre" placeholder="Nombre" required>
+      <input type="text" name="apellido" placeholder="Apellido" required>
+
+      <div class="telefono">
+        <div class="prefijo">
+          <span class="bandera" aria-hidden="true"></span>
+          <span>57</span>
+        </div>
+        <input type="tel" name="telefono" placeholder="Número de teléfono" required>
+      </div>
+
+      <input type="email" name="correo" placeholder="Correo electrónico" required>
+      <input type="password" name="contrasena" placeholder="Contraseña" required>
+      <input type="password" name="confirmar" placeholder="Confirmar contraseña" required>
+
+      <button type="submit" class="btn">Confirmar</button>
+    </form>
+  </main>
+</body>
+</html>
