@@ -1,5 +1,5 @@
 :root {
-  --amarillo: #ffda34;
+  --amarillo: #e6bd00;
   --gris: #e8e5e5;
   --texto: #222;
 }
@@ -28,6 +28,7 @@ body {
   border: 1px solid #333;
   border-radius: 14px;
   text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .logo {
@@ -118,7 +119,7 @@ body {
 }
 
 .btn:hover {
-  background: #f5cc10;
+  background: #fbd116;
 }
 
 .btn:active {

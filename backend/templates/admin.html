@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home · Revisión de publicaciones</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/frontend/css/admin.css">
+</head>
+<body>
+
+  <header class="barra">
+    <div class="marca">
+      <span class="marca-logo">Home</span>
+      <span class="marca-sub">Revisión de publicaciones</span>
+    </div>
+
+    <nav class="filtros" aria-label="Filtrar por estado">
+      <button class="filtro activo" data-filtro="pendiente" type="button">
+        Pendientes <span class="contador" id="cnt-pendiente">0</span>
+      </button>
+      <button class="filtro" data-filtro="aprobado" type="button">
+        Aprobadas <span class="contador" id="cnt-aprobado">0</span>
+      </button>
+      <button class="filtro" data-filtro="rechazado" type="button">
+        Rechazadas <span class="contador" id="cnt-rechazado">0</span>
+      </button>
+      <button class="filtro" data-filtro="todos" type="button">
+        Todas <span class="contador" id="cnt-todos">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <p class="banner-demo" id="banner-demo" hidden>
+    No se pudo conectar con el servidor. Estás viendo datos de ejemplo.
+  </p>
+
+  <main class="panel">
+    <section class="cola" aria-label="Lista de publicaciones">
+      <ul class="lista" id="lista"></ul>
+      <p class="vacio" id="vacio" hidden></p>
+    </section>
+
+    <section class="detalle" id="detalle" aria-live="polite">
+      <p class="detalle-vacio">Selecciona una publicación para revisar sus datos.</p>
+    </section>
+  </main>
+
+  <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+  <script src="/frontend/js/script.js"></script>
+</body>
+</html>

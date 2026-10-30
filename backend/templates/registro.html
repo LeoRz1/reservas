@@ -6,7 +6,7 @@
   <title>Registro - Home</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/frontend/css/registro.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/registro.css') }}">
 </head>
 <body>
   <main class="card">
@@ -14,9 +14,10 @@
 
     <h1 class="titulo">Registra tus datos</h1>
 
-    <form class="formulario" action="#" method="post">
+    <form class="formulario" action="{{ url_for('registro') }}" method="post">
       <input type="text" name="nombre" placeholder="Nombre" required>
       <input type="text" name="apellido" placeholder="Apellido" required>
+      <input type="text" name="cedula" placeholder="Cédula de ciudadanía" required>
 
       <div class="telefono">
         <div class="prefijo">

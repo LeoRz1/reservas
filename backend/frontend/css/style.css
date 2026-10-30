@@ -1,0 +1,58 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+.hero {
+  padding: 90px 0;
+  background-color: #fbd116;
+}
+
+.hero-titulo {
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.hero-eslogan {
+  font-weight: 400;
+}
+
+.info {
+  padding: 60px 0;
+}
+.btn-registro {
+  background-color: #fbd116;
+  color: #222 !important;
+  font-weight: 600;
+  padding: 8px 22px !important;
+  border-radius: 8px;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-registro:hover {
+  background-color: #e6bd00;
+  transform: translateY(-2px);
+}
+
+.info-card {
+  height: 100%;
+  padding: 28px;
+  background: #f4f6f8;
+  border-top: 5px solid #fbd116;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s;
+}
+
+.info-card:hover {
+  transform: translateY(-5px);
+}
+
+.info-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  color: #222;
+}
+
+.info-card p {
+  margin-bottom: 6px;
+  color: #555;
+}
