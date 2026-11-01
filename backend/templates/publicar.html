@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME - Publicar inmueble</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/publicar.css') }}">
+</head>
+<body>
+
+<header class="barra">
+    <a class="volver" href="{{ url_for('cuerpo') }}">← Volver</a>
+    <h1>Publicar inmueble</h1>
+    <span class="barra-espacio"></span>
+</header>
+
+<main class="pantalla">
+    <p id="mensajeError" class="error" hidden></p>
+
+    <form id="formInmueble" class="formulario" enctype="multipart/form-data">
+
+        <!-- Columna izquierda -->
+        <section class="bloque">
+            <h2>Información general</h2>
+
+            <label for="titulo">Título</label>
+            <input type="text" id="titulo" name="titulo" maxlength="100"
+                   placeholder="Ej: Casa amplia en el centro" required>
+
+            <label for="tipo_inmueble_id">Tipo de inmueble</label>
+            <select id="tipo_inmueble_id" name="tipo_inmueble_id" required>
+                <option value="">Selecciona un tipo</option>
+                {% for t in tipos %}
+                <option value="{{ t.id }}">{{ t.nombre }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" rows="5"
+                      placeholder="Inmueble con amplio espacio..." required></textarea>
+
+            <label for="precio">Precio del arriendo (COP)</label>
+            <input type="number" id="precio" name="precio" min="1" step="0.01"
+                   placeholder="Ej: 1200000" required>
+
+            <label for="disponibilidad">Disponibilidad</label>
+            <select id="disponibilidad" name="disponibilidad">
+                <option value="true">Disponible</option>
+                <option value="false">No disponible</option>
+            </select>
+        </section>
+
+        <!-- Columna derecha -->
+        <section class="bloque">
+            <h2>Características</h2>
+
+            <div class="fila">
+                <div>
+                    <label for="area">Área (m²)</label>
+                    <input type="number" id="area" name="area" min="1" step="0.01" required>
+                </div>
+                <div>
+                    <label for="habitaciones">Habitaciones</label>
+                    <input type="number" id="habitaciones" name="habitaciones" min="0" value="1" required>
+                </div>
+                <div>
+                    <label for="banos">Baños</label>
+                    <input type="number" id="banos" name="banos" min="0" value="1" required>
+                </div>
+                <div>
+                    <label for="garajes">Garajes</label>
+                    <input type="number" id="garajes" name="garajes" min="0" value="0" required>
+                </div>
+            </div>
+
+            <h2>Ubicación</h2>
+
+            <label for="ciudad_id">Ciudad</label>
+            <select id="ciudad_id" name="ciudad_id" required>
+                <option value="">Selecciona una ciudad</option>
+                {% for c in ciudades %}
+                <option value="{{ c.id }}">{{ c.nombre }} - {{ c.departamento }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="barrio">Barrio</label>
+            <input type="text" id="barrio" name="barrio" maxlength="100" placeholder="Ej: Centro">
+
+            <label for="direccion">Dirección</label>
+            <input type="text" id="direccion" name="direccion" maxlength="150"
+                   placeholder="Ej: Calle 10 # 15-20" required>
+
+            <label for="complemento">Complemento (opcional)</label>
+            <input type="text" id="complemento" name="complemento" maxlength="100"
+                   placeholder="Ej: Apto 301, Torre B">
+
+            <h2>Fotografía</h2>
+
+            <label for="imagen">Foto principal</label>
+            <input type="file" id="imagen" name="imagen"
+                   accept="image/png,image/jpeg,image/webp" required>
+        </section>
+
+        <button type="submit" class="btn-guardar">Publicar inmueble</button>
+    </form>
+</main>
+
+<script src="{{ url_for('static', filename='js/publicar.js') }}"></script>
+</body>
+</html>

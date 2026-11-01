@@ -1,0 +1,411 @@
+
+:root {
+    --gris: #e8e5e5;
+    --amarillo: #e6bd00;
+    --blanco: #ffffff;
+    --negro: #222222;
+    --verde: #00bd55;
+}
+
+/* CONFIGURACIÓN GENERAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: white;
+
+    background-image: radial-gradient(#d9e1e8 1px, transparent 1px);
+    background-size: 12px 12px;
+
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* BARRA DE NAVEGACIÓN */
+.navbar {
+    width: 100%;
+    min-height: 65px;
+
+    background-color: var(--gris);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 4%;
+    gap: 20px;
+
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+/* LOGO */
+.logo {
+    min-width: 65px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: var(--amarillo);
+    font-weight: bold;
+    line-height: 15px;
+}
+
+.logo span {
+    font-size: 27px;
+}
+
+.logo p {
+    font-size: 11px;
+}
+
+/* BUSCADOR */
+.buscador {
+    display: flex;
+    align-items: center;
+
+    width: 250px;
+    height: 35px;
+
+    background-color: white;
+    border: 1px solid #777;
+    border-radius: 4px;
+
+    padding: 0 8px;
+}
+
+.buscador input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 7px;
+    font-size: 12px;
+}
+
+/* NAVEGACIÓN */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+nav button {
+    background: none;
+    border: none;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+    color: var(--negro);
+}
+
+nav button:hover {
+    color: #a18400;
+}
+
+.nav-activo {
+    text-decoration: underline;
+    text-decoration-color: var(--amarillo);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 5px;
+}
+
+/* BOTÓN PUBLICAR */
+.btn-publicar {
+    background-color: var(--amarillo);
+
+    border: 1px solid #333;
+    border-radius: 5px;
+
+    padding: 10px 16px;
+
+    font-weight: bold;
+    font-size: 12px;
+
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-publicar:hover {
+    background-color: #c9a500;
+}
+
+/* CONTENIDO PRINCIPAL */
+main {
+    width: 100%;
+    padding: 25px 4%;
+}
+
+/* GALERÍA */
+.galeria {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 20px;
+}
+
+/* TARJETAS */
+.tarjeta {
+    background-color: var(--gris);
+
+    border: 1px solid #777;
+    border-radius: 6px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-4px);
+}
+
+/* IMAGEN */
+.tarjeta img {
+    width: 100%;
+    height: 170px;
+
+    object-fit: cover;
+    display: block;
+}
+
+/* INFORMACIÓN */
+.informacion {
+    padding: 12px;
+}
+
+.informacion h3 {
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.informacion p {
+    font-size: 11px;
+    margin-bottom: 7px;
+}
+
+.disponible {
+    color: var(--verde);
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.no-disponible {
+    color: red;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* MENSAJE VACÍO */
+.mensaje-vacio {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    font-size: 14px;
+}
+
+/* MODALES */
+.modal {
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.55);
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 15px;
+    z-index: 20;
+}
+
+.modal-contenido {
+    background-color: white;
+
+    width: 100%;
+    max-width: 430px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 25px;
+    border-radius: 8px;
+
+    position: relative;
+}
+
+.modal-contenido h2 {
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.subtitulo {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* BOTÓN CERRAR */
+.cerrar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+
+    background: none;
+    border: none;
+
+    font-size: 27px;
+    cursor: pointer;
+}
+
+/* FORMULARIO */
+#formInmueble {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#formInmueble label {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#formInmueble input,
+#formInmueble select {
+    width: 100%;
+
+    padding: 10px;
+
+    border: 1px solid #bbb;
+    border-radius: 4px;
+
+    outline: none;
+    font-size: 12px;
+}
+
+#formInmueble input:focus,
+#formInmueble select:focus {
+    border-color: var(--amarillo);
+}
+
+/* BOTÓN GUARDAR */
+.btn-guardar {
+    margin-top: 10px;
+
+    padding: 12px;
+
+    background-color: var(--amarillo);
+
+    border: 1px solid #333;
+    border-radius: 5px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-guardar:hover {
+    background-color: #c9a500;
+}
+
+/* MODAL DETALLES */
+#modalImagen {
+    width: 100%;
+    height: 210px;
+
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 12px;
+}
+
+.modal-contenido p {
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.btn-reservar {
+    width: 100%;
+    padding: 11px;
+
+    background-color: var(--amarillo);
+
+    border: 1px solid #333;
+    border-radius: 5px;
+
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-reservar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+
+    .galeria {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+}
+
+@media (max-width: 550px) {
+
+    .navbar {
+        justify-content: center;
+    }
+
+    .buscador {
+        width: 100%;
+    }
+
+    nav {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .btn-publicar {
+        width: 100%;
+    }
+
+    .galeria {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+}
+.pago-total { font-size: 18px; }
+
+.metodos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+.metodo { position: relative; border: 1.5px solid #cfd8dc; border-radius: 14px;
+          padding: 14px 6px; text-align: center; cursor: pointer; font-size: 14px; }
+.metodo input { position: absolute; opacity: 0; pointer-events: none; }
+.metodo:has(input:checked) { border-color: #fbd116; background: #fff8d6; font-weight: 600; }
+
+.btn-secundario { width: 100%; margin-top: 10px; padding: 12px; border: 1.5px solid #cfd8dc;
+                  border-radius: 999px; background: #fff; font: inherit; cursor: pointer; }
+
+
+.aviso { background: #fff8d6; border-radius: 14px; padding: 12px 16px; margin-top: 12px; }

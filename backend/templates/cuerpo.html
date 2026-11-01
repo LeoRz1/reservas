@@ -1,11 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>HOME - Inmuebles</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cuerpo.css') }}">
 </head>
 <body>
-    <h1>Hello, world</h1>
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <header class="navbar">
+        <div class="logo">
+            <span>⌂</span>
+            <p>HOME</p>
+        </div>
+
+        <div class="buscador">
+            <input type="text" id="buscarInmueble" placeholder="Buscar por título, ciudad o barrio">
+        </div>
+
+        <nav>
+            <button type="button" id="btnInicio" class="nav-activo">Inicio</button>
+            <button type="button" id="btnAcerca">Acerca de</button>
+            <a href="{{ url_for('logout') }}" id="btnSalir">Salir</a>
+        </nav>
+
+        <a class="btn-publicar" href="{{ url_for('publicar') }}">Publicar inmueble</a>
+    </header>
+
+    <!-- GALERÍA -->
+    <main>
+        <section class="galeria" id="galeriaInmuebles"></section>
+        <p id="mensajeVacio" class="mensaje-vacio" hidden>No se encontraron inmuebles.</p>
+    </main>
+
+    <!-- MODAL DETALLES + RESERVA -->
+    <div class="modal" id="modalDetalles">
+        <div class="modal-contenido">
+            <button type="button" class="cerrar" id="cerrarDetalles">×</button>
+
+            <img id="modalImagen" src="" alt="Inmueble">
+            <h2 id="modalTitulo"></h2>
+            <p id="modalTipo"></p>
+            <p id="modalDescripcion"></p>
+            <p id="modalDireccion"></p>
+            <p id="modalCaracteristicas"></p>
+            <p id="modalPrecio"></p>
+            <p id="modalEstado"></p>
+
+            <p id="modalAviso" class="aviso" hidden></p>
+
+            <form id="formReserva">
+                <input type="hidden" id="reservaInmuebleId" name="id_inmueble">
+
+                <label for="fecha_inicio">Fecha de inicio</label>
+                <input type="date" id="fecha_inicio" name="fecha_inicio" required>
+
+                <label for="fecha_fin">Fecha de fin</label>
+                <input type="date" id="fecha_fin" name="fecha_fin" required>
+
+                <button type="submit" class="btn-reservar" id="btnReservar">Reservar inmueble</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL ACERCA DE -->
+    <div class="modal" id="modalAcerca">
+        <div class="modal-contenido">
+            <button type="button" class="cerrar" id="cerrarAcerca">×</button>
+            <h2>Acerca de HOME</h2>
+            <p>HOME es una plataforma diseñada para facilitar la búsqueda y publicación de inmuebles en arriendo.</p>
+        </div>
+    </div>
+
+    <!-- MODAL DE PAGO (simulado) -->
+    <div class="modal" id="modalPago">
+        <div class="modal-contenido">
+            <button type="button" class="cerrar" id="cerrarPago">×</button>
+
+            <h2>Pagar reserva</h2>
+            <p id="pagoResumen"></p>
+            <p class="pago-total">Total a pagar: <strong id="pagoTotal"></strong></p>
+
+            <form id="formPago">
+                <input type="hidden" id="pagoReservaId" name="id_reserva">
+
+                <div class="metodos">
+                    <label class="metodo">
+                        <input type="radio" name="metodo_pago" value="tarjeta" required>
+                        <span>💳 Tarjeta</span>
+                    </label>
+                    <label class="metodo">
+                        <input type="radio" name="metodo_pago" value="transferencia">
+                        <span>🏦 Transferencia</span>
+                    </label>
+                    <label class="metodo">
+                        <input type="radio" name="metodo_pago" value="efectivo">
+                        <span>💵 Efectivo</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-reservar" id="btnPagar">Confirmar pago</button>
+                <button type="button" class="btn-secundario" id="btnCancelarReserva">Cancelar reserva</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/cuerpo.js') }}"></script>
 </body>
 </html>
