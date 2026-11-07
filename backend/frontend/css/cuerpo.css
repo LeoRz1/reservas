@@ -409,3 +409,12 @@ main {
 
 
 .aviso { background: #fff8d6; border-radius: 14px; padding: 12px 16px; margin-top: 12px; }
+
+.modal-contenido {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal.activo {
+    display: flex;
+}

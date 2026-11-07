@@ -7,6 +7,7 @@ from mysql.connector import IntegrityError
 from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 ROL_ARRENDATARIO = 2
+ROL_ADMIN = 1 
 METODOS_PAGO = {"tarjeta", "transferencia", "efectivo"}
 
 app = Flask(
@@ -24,6 +25,7 @@ TIPO_ID = 1
 @app.route("/")
 def inicio():
     return render_template("index.html")
+
 
 @app.route("/api/inmuebles", methods=["GET"])
 def api_inmuebles():
@@ -51,11 +53,6 @@ def api_inmuebles():
         fila["area"] = float(fila["area"])
 
     return jsonify(filas)
-
-
-
-
-
 
 
 
@@ -154,11 +151,17 @@ def login():
         if usuario and check_password_hash(usuario["contrasena_HASH"], contrasena):
             session["usuario_id"] = usuario["id"]
             session["rol_id"] = usuario["rol_id"]
-            return redirect(url_for("cuerpo"))   
-
-        flash("Correo o contraseña incorrectos.", "error")
+            return redirect(url_for("cuerpo")) 
 
     return render_template("login.html")
+
+@app.route("/admin")
+def admin():
+    if session.get("rol_id") != ROL_ADMIN:
+        return redirect(url_for("login"))
+    return render_template("admin.html")
+
+
 
 @app.route("/registro", methods=["GET", "POST"])
 def registro():
@@ -198,11 +201,9 @@ def registro():
 
 @app.route("/cuerpo")
 def cuerpo():
+    if "usuario_id" not in session:
+        return redirect(url_for("login"))
     return render_template("cuerpo.html")
-
-@app.route("/admin")
-def admin():
-    return render_template("admin.html")
 
 @app.route("/publicar")
 def publicar():
@@ -376,11 +377,6 @@ def cancelar_reserva(id_reserva):
         return jsonify({"ok": True})
     finally:
         conn.close()
-
-
-
-
-        
 
 
 if __name__ == "__main__":

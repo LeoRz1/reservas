@@ -112,13 +112,48 @@ document.getElementById("formReserva").addEventListener("submit", async (e) => {
   try { data = await res.json(); } catch {}
 
   if (res.ok) {
-    alert("Reserva creada. Total: " + formatoPrecio(data.valor_total));
     e.target.reset();
     cerrarModal("modalDetalles");
+    document.getElementById("pagoReservaId").value = data.reserva_id;
+    document.getElementById("pagoTotal").textContent = formatoPrecio(data.valor_total);
+    abrirModal("modalPago");
   } else if (res.status === 401) {
     window.location.href = "/login";
   } else {
     alert(data.error || "Error al reservar");
+  }
+});
+
+// ---------- Pago ----------
+document.getElementById("cerrarPago").addEventListener("click", () => cerrarModal("modalPago"));
+
+document.getElementById("formPago").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const res = await fetch("/api/pagos", { method: "POST", body: new FormData(e.target) });
+
+  let data = {};
+  try { data = await res.json(); } catch {}
+
+  if (res.ok) {
+    alert("Pago registrado. Reserva confirmada.");
+    e.target.reset();
+    cerrarModal("modalPago");
+    window.location.href = "/cuerpo";
+  } else if (res.status === 401) {
+    window.location.href = "/login";
+  } else {
+    alert(data.error || "Error al pagar");
+  }
+});
+
+document.getElementById("btnCancelarReserva").addEventListener("click", async () => {
+  const id = document.getElementById("pagoReservaId").value;
+  const res = await fetch(`/api/reservas/${id}/cancelar`, { method: "POST" });
+  if (res.ok) {
+    cerrarModal("modalPago");
+    window.location.href = "/cuerpo";
+  } else {
+    alert("No se pudo cancelar");
   }
 });
 
