@@ -147,11 +147,14 @@ def login():
         usuario = cur.fetchone()
         cur.close()
         conn.close()
-
+        
+        
         if usuario and check_password_hash(usuario["contrasena_HASH"], contrasena):
             session["usuario_id"] = usuario["id"]
             session["rol_id"] = usuario["rol_id"]
-            return redirect(url_for("cuerpo")) 
+            if usuario["rol_id"] == ROL_ADMIN:
+                return redirect(url_for("admin"))
+            return redirect(url_for("cuerpo"))
 
     return render_template("login.html")
 
@@ -160,6 +163,44 @@ def admin():
     if session.get("rol_id") != ROL_ADMIN:
         return redirect(url_for("login"))
     return render_template("admin.html")
+
+
+
+@app.route("/api/admin/reservas", methods=["GET"])
+def api_admin_reservas():
+    if session.get("rol_id") != ROL_ADMIN:
+        return jsonify({"error": "No autorizado"}), 403
+
+    conn = get_conection()
+    cur = conn.cursor(dictionary=True)
+    cur.execute("""
+        SELECT r.id, r.fecha_inicio, r.fecha_fin, r.estado, r.valor_total,
+               r.fecha_creacion,
+               i.titulo,
+               l.direccion, c.nombre AS ciudad,
+               u.nombre, u.apellido, u.correo, u.telefono,
+               p.monto, p.metodo_pago, p.fecha_pago
+        FROM informacion_reserva r
+        JOIN inmueble i ON i.id = r.id_inmueble
+        JOIN locacion l ON l.id = i.locacion_id
+        JOIN ciudad c ON c.id = l.ciudad_id
+        JOIN usuario u ON u.id = r.id_usuario
+        LEFT JOIN pago p ON p.id_informacion_reserva = r.id
+        ORDER BY r.fecha_creacion DESC
+    """)
+    filas = cur.fetchall()
+    cur.close()
+    conn.close()
+
+    for f in filas:
+        f["valor_total"] = float(f["valor_total"])
+        if f["monto"] is not None:
+            f["monto"] = float(f["monto"])
+        for campo in ("fecha_inicio", "fecha_fin", "fecha_creacion", "fecha_pago"):
+            if f[campo] is not None:
+                f[campo] = f[campo].isoformat()
+
+    return jsonify(filas)
 
 
 

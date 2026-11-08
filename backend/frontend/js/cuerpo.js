@@ -1,6 +1,7 @@
 const galeria = document.getElementById("galeriaInmuebles");
 const mensajeVacio = document.getElementById("mensajeVacio");
 const buscador = document.getElementById("buscarInmueble");
+const precioMax = document.getElementById("precioMax");
 let inmuebles = [];
 
 const formatoPrecio = (n) => "$" + Number(n).toLocaleString("es-CO");
@@ -21,6 +22,7 @@ document.querySelectorAll(".modal").forEach((modal) => {
 
 document.getElementById("btnInicio").addEventListener("click", () => {
   buscador.value = "";
+  precioMax.value = "";
   mostrar(inmuebles);
 });
 
@@ -91,13 +93,21 @@ function abrirDetalles(i) {
 }
 
 // ---------- Búsqueda ----------
-buscador.addEventListener("input", () => {
+// ---------- Búsqueda y filtros ----------
+function filtrar() {
   const texto = buscador.value.trim().toLowerCase();
-  mostrar(inmuebles.filter((i) =>
-    [i.titulo, i.ciudad, i.barrio, i.direccion, i.tipo]
-      .some((campo) => (campo || "").toLowerCase().includes(texto))
-  ));
-});
+  const max = parseFloat(precioMax.value);   // NaN si el campo está vacío
+
+  mostrar(inmuebles.filter((i) => {
+    const coincideTexto = [i.titulo, i.ciudad, i.barrio, i.direccion, i.tipo]
+      .some((campo) => (campo || "").toLowerCase().includes(texto));
+    const coincidePrecio = isNaN(max) || i.precio <= max;
+    return coincideTexto && coincidePrecio;
+  }));
+}
+
+buscador.addEventListener("input", filtrar);
+precioMax.addEventListener("input", filtrar);
 
 // ---------- Reserva ----------
 const hoy = new Date().toISOString().split("T")[0];
