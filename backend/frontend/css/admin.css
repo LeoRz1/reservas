@@ -511,3 +511,8 @@ button {
     transition: none;
   }
 }
+
+.fila[data-estado="confirmada"] { border-left-color: var(--verde); }
+.fila[data-estado="cancelada"]  { border-left-color: var(--rojo); }
+.estado-confirmada { background: var(--verde-fondo); color: var(--verde); }
+.estado-cancelada  { background: var(--rojo-fondo);  color: var(--rojo); }

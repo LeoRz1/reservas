@@ -114,8 +114,7 @@ function mostrarDetalle(r) {
   } else {
     pago.appendChild(el("p", "", "Sin pago registrado."));
   }
-
-  detalle.append(inmueble, persona, pago);
+  detalle.append(inmueble, persona, pago, bloqueEstados(r));
 }
 
 // ---------- Filtros ----------
@@ -127,5 +126,60 @@ document.querySelectorAll(".filtro").forEach((boton) => {
     pintar();
   });
 });
+
+// ---------- Aviso ----------
+const aviso = document.getElementById("aviso");
+let temporizador;
+function mostrarAviso(texto, error = false) {
+  aviso.textContent = texto;
+  aviso.classList.toggle("error", error);
+  aviso.classList.add("visible");
+  clearTimeout(temporizador);
+  temporizador = setTimeout(() => aviso.classList.remove("visible"), 3000);
+}
+
+// ---------- Cambiar estado ----------
+async function cambiarEstado(r, nuevo) {
+  if (nuevo === "cancelada" && !confirm("¿Cancelar esta reserva?")) return;
+
+  try {
+    const res = await fetch(`/api/admin/reservas/${r.id}/estado`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ estado: nuevo }),
+    });
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      mostrarAviso(data.error || "No se pudo cambiar el estado", true);
+      return;
+    }
+
+    r.estado = nuevo;          // actualiza la copia en memoria
+    pintar();                  // recalcula contadores y lista
+    mostrarDetalle(r);
+    mostrarAviso("Reserva marcada como " + nuevo);
+  } catch {
+    mostrarAviso("No se pudo conectar con el servidor", true);
+  }
+}
+
+function bloqueEstados(r) {
+  const bloque = el("div", "bloque-detalle");
+  bloque.appendChild(el("h3", "", "Cambiar estado"));
+
+  const fila = el("div", "acciones-estado");
+  [["pendiente", "Dejar pendiente"], ["confirmada", "Confirmar"], ["cancelada", "Cancelar"]]
+    .forEach(([estado, texto]) => {
+      const boton = el("button", "btn-estado " + estado, texto);
+      boton.type = "button";
+      boton.disabled = r.estado === estado;   // el estado actual no se puede repetir
+      boton.addEventListener("click", () => cambiarEstado(r, estado));
+      fila.appendChild(boton);
+    });
+
+  bloque.appendChild(fila);
+  return bloque;
+}
 
 cargar();

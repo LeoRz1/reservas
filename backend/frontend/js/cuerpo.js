@@ -6,6 +6,13 @@ let inmuebles = [];
 
 const formatoPrecio = (n) => "$" + Number(n).toLocaleString("es-CO");
 
+function infoEstado(i) {
+  if (!i.estado) return { clase: "no-disponible", texto: "No disponible" };
+  if (i.estado_reserva === "confirmada") return { clase: "confirmada", texto: "Reservado" };
+  if (i.estado_reserva === "pendiente") return { clase: "pendiente", texto: "Reserva pendiente" };
+  return { clase: "disponible", texto: "Disponible" };
+}
+
 // ---------- Modales ----------
 const abrirModal = (id) => document.getElementById(id).classList.add("activo");
 const cerrarModal = (id) => document.getElementById(id).classList.remove("activo");
@@ -65,9 +72,9 @@ function mostrar(lista) {
     precio.textContent = formatoPrecio(i.precio);
 
     const estado = document.createElement("span");
-    estado.className = i.estado ? "etiqueta disponible" : "etiqueta no-disponible";
-    estado.textContent = i.estado ? "Disponible" : "No disponible";
-
+    const info = infoEstado(i);
+    estado.className = `etiqueta ${info.clase}`;
+    estado.textContent = info.texto;
     tarjeta.append(img, titulo, ubicacion, precio, estado);
     tarjeta.addEventListener("click", () => abrirDetalles(i));
     galeria.appendChild(tarjeta);
@@ -85,8 +92,7 @@ function abrirDetalles(i) {
   document.getElementById("modalCaracteristicas").textContent =
     `${i.area} m² · ${i.habitaciones} hab. · ${i.banos} baños · ${i.garajes} garajes`;
   document.getElementById("modalPrecio").textContent = formatoPrecio(i.precio);
-  document.getElementById("modalEstado").textContent = i.estado ? "Disponible" : "No disponible";
-
+  document.getElementById("modalEstado").textContent = infoEstado(i).texto;
   document.getElementById("reservaInmuebleId").value = i.id;
   document.getElementById("btnReservar").disabled = !i.estado;
   abrirModal("modalDetalles");

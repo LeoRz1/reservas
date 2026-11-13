@@ -33,17 +33,24 @@ def api_inmuebles():
     cur = conn.cursor(dictionary=True)
     cur.execute("""
         SELECT i.id, i.titulo, i.descripcion, i.precio, i.area, i.habitaciones,
-               i.banos, i.garajes, i.estado,
-               t.nombre AS tipo,
-               l.direccion, l.barrio, c.nombre AS ciudad,
-               f.ruta AS imagen
-        FROM inmueble i
-        JOIN locacion l ON l.id = i.locacion_id
-        JOIN ciudad c ON c.id = l.ciudad_id
-        JOIN tipo_inmueble t ON t.id = i.tipo_inmueble_id
-        LEFT JOIN propiedad_foto f ON f.inmueble_id = i.id AND f.principal = 1
-        ORDER BY i.fecha_publicacion DESC
-    """)
+           i.banos, i.garajes, i.estado,
+           t.nombre AS tipo,
+           l.direccion, l.barrio, c.nombre AS ciudad,
+           f.ruta AS imagen,
+           (SELECT r.estado
+              FROM informacion_reserva r
+             WHERE r.id_inmueble = i.id
+               AND r.estado IN ('pendiente', 'confirmada')
+               AND r.fecha_fin >= CURDATE()
+             ORDER BY (r.estado = 'confirmada') DESC, r.fecha_inicio ASC
+             LIMIT 1) AS estado_reserva
+    FROM inmueble i
+    JOIN locacion l ON l.id = i.locacion_id
+    JOIN ciudad c ON c.id = l.ciudad_id
+    JOIN tipo_inmueble t ON t.id = i.tipo_inmueble_id
+    LEFT JOIN propiedad_foto f ON f.inmueble_id = i.id AND f.principal = 1
+    ORDER BY i.fecha_publicacion DESC
+""")
     filas = cur.fetchall()
     cur.close()
     conn.close()
@@ -163,6 +170,7 @@ def admin():
     if session.get("rol_id") != ROL_ADMIN:
         return redirect(url_for("login"))
     return render_template("admin.html")
+
 
 
 
@@ -337,6 +345,57 @@ def crear_reserva():
     finally:
         conn.close()
 
+ESTADOS_RESERVA = {"pendiente", "confirmada", "cancelada"}
+
+
+@app.route("/api/admin/reservas/<int:id>/estado", methods=["PUT"])
+def admin_cambiar_estado(id):
+    if session.get("rol_id") != ROL_ADMIN:
+        return jsonify({"error": "Solo para administradores"}), 403
+
+    nuevo = (request.get_json(silent=True) or {}).get("estado")
+    if nuevo not in ESTADOS_RESERVA:
+        return jsonify({"error": "Estado inválido"}), 400
+
+    conn = get_conection()
+    try:
+        cur = conn.cursor(dictionary=True)
+        cur.execute(
+            """SELECT id_inmueble, fecha_inicio, fecha_fin, estado
+               FROM informacion_reserva WHERE id = %s FOR UPDATE""",
+            (id,),
+        )
+        reserva = cur.fetchone()
+        if not reserva:
+            conn.rollback()
+            return jsonify({"error": f"No existe la reserva {id}"}), 404
+
+        if reserva["estado"] == nuevo:
+            conn.rollback()
+            return jsonify({"ok": True, "estado": nuevo})
+
+        # Al reactivar una reserva cancelada, sus fechas no pueden chocar con otra activa
+        if nuevo != "cancelada":
+            cur.execute(
+                """SELECT id FROM informacion_reserva
+                   WHERE id_inmueble = %s AND id <> %s AND estado <> 'cancelada'
+                     AND fecha_inicio < %s AND fecha_fin > %s""",
+                (reserva["id_inmueble"], id, reserva["fecha_fin"], reserva["fecha_inicio"]),
+            )
+            if cur.fetchone():
+                conn.rollback()
+                return jsonify({"error": "Esas fechas ya las ocupa otra reserva activa"}), 409
+
+        cur.execute("UPDATE informacion_reserva SET estado = %s WHERE id = %s", (nuevo, id))
+        conn.commit()
+        return jsonify({"ok": True, "estado": nuevo})
+
+    except Exception as e:
+        conn.rollback()
+        print("ERROR admin_cambiar_estado:", e)
+        return jsonify({"error": "No se pudo cambiar el estado"}), 500
+    finally:
+        conn.close()
 
 
 
