@@ -1,7 +1,7 @@
 
 :root {
-    --gris: #e8e5e5;
-    --amarillo: #e6bd00;
+    --gris: #f1efef;
+    --amarillo: #f6cb0e;
     --blanco: #ffffff;
     --negro: #222222;
     --verde: #00bd55;
@@ -18,9 +18,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: white;
 
-    background-image: radial-gradient(#d9e1e8 1px, transparent 1px);
-    background-size: 12px 12px;
-
+   
     min-height: 100vh;
     width: 100%;
 }
@@ -75,7 +73,7 @@ body {
 
     background-color: white;
     border: 1px solid #777;
-    border-radius: 4px;
+    border-radius: 8px;
 
     padding: 0 8px;
 }
@@ -87,6 +85,7 @@ body {
     padding: 7px;
     font-size: 12px;
 }
+
 
 /* NAVEGACIÓN */
 nav {
@@ -120,8 +119,10 @@ nav button:hover {
 /* BOTÓN PUBLICAR */
 .btn-publicar {
     background-color: var(--amarillo);
+    color:#222222;
+    
 
-    border: 1px solid #333;
+    border: 1px solid #c4a402;
     border-radius: 5px;
 
     padding: 10px 16px;
@@ -131,10 +132,42 @@ nav button:hover {
 
     cursor: pointer;
     white-space: nowrap;
+
+    text-decoration: none;
+    transition: transform 0.2s ease;
 }
+
+.btn-Salir{
+    background-color: var(--amarillo);
+    color:#222222;
+
+    border: 1px solid #c4a402;
+    border-radius: 5px;
+
+    padding: 6px 14px;
+
+
+    cursor: pointer;
+    white-space: nowrap;
+
+
+    font-weight: bold;
+    font-size: 14px;
+
+    text-decoration: none;
+
+    transition: transform 0.2s ease;
+}
+
+.btn-Salir:hover{
+    transform: scale(1.04);
+}
+
 
 .btn-publicar:hover {
     background-color: #c9a500;
+    transform: scale(1.04);
+    
 }
 
 /* CONTENIDO PRINCIPAL */
@@ -157,7 +190,7 @@ main {
 .tarjeta {
     background-color: var(--gris);
 
-    border: 1px solid #777;
+    border: 1px solid #ffff;
     border-radius: 6px;
 
     overflow: hidden;
@@ -196,13 +229,13 @@ main {
 
 .disponible {
     color: var(--verde);
-    font-size: 11px;
+    font-size: 15px;
     font-weight: bold;
 }
 
 .no-disponible {
     color: red;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: bold;
 }
 

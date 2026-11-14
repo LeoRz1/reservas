@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME - Inmuebles</title>
+    <title>DANIELA MALUCA Y ENANA</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/cuerpo.css') }}">
 </head>
 <body>
@@ -20,13 +20,13 @@
             <input type="text" id="buscarInmueble" placeholder="Buscar por título, ciudad o barrio">
         </div>
         <div class="buscador">
-    <input type="number" id="precioMax" placeholder="Precio máximo" min="0" step="50000">
+    <input type="number" id="precioMax" placeholder="Presupuesto" min="0" step="50000">
 </div>
 
         <nav>
             <button type="button" id="btnInicio" class="nav-activo">Inicio</button>
             <button type="button" id="btnAcerca">Acerca de</button>
-            <a href="{{ url_for('logout') }}" id="btnSalir">Salir</a>
+            <a class="btn-Salir"href="{{ url_for('logout') }}" id="btnSalir">Salir</a>
         </nav>
 
         <a class="btn-publicar" href="{{ url_for('publicar') }}">Publicar inmueble</a>
@@ -74,6 +74,7 @@
             <button type="button" class="cerrar" id="cerrarAcerca">×</button>
             <h2>Acerca de HOME</h2>
             <p>HOME es una plataforma diseñada para facilitar la búsqueda y publicación de inmuebles en arriendo.</p>
+            <p>Contando con un apartado para digitar su presupuesto y mirar los mejores inmuebles </p>
         </div>
     </div>
 
@@ -92,15 +93,15 @@
                 <div class="metodos">
                     <label class="metodo">
                         <input type="radio" name="metodo_pago" value="tarjeta" required>
-                        <span>💳 Tarjeta</span>
+                        <span> Tarjeta</span>
                     </label>
                     <label class="metodo">
                         <input type="radio" name="metodo_pago" value="transferencia">
-                        <span>🏦 Transferencia</span>
+                        <span> Transferencia</span>
                     </label>
                     <label class="metodo">
                         <input type="radio" name="metodo_pago" value="efectivo">
-                        <span>💵 Efectivo</span>
+                        <span> Efectivo</span>
                     </label>
                 </div>
 

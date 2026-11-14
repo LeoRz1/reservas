@@ -88,28 +88,28 @@ function mostrarDetalle(r) {
   const inmueble = el("div", "bloque-detalle");
   inmueble.append(
     el("h2", "", r.titulo),
-    dato("Ubicación", `${r.direccion}, ${r.ciudad}`),
-    dato("Fechas", `${fecha(r.fecha_inicio)} → ${fecha(r.fecha_fin)} (${dias(r.fecha_inicio, r.fecha_fin)} días)`),
-    dato("Estado", r.estado),
-    dato("Total", dinero(r.valor_total)),
-    dato("Reservada el", fecha(r.fecha_creacion))
+    dato("Ubicación ", `${r.direccion}, ${r.ciudad}`),
+    dato("Fechas ", `${fecha(r.fecha_inicio)} → ${fecha(r.fecha_fin)} (${dias(r.fecha_inicio, r.fecha_fin)} días)`),
+    dato("Estado ", r.estado),
+    dato("Total ", dinero(r.valor_total)),
+    dato("Reservada el ", fecha(r.fecha_creacion))
   );
 
   const persona = el("div", "bloque-detalle");
   persona.append(
     el("h3", "", "Quién reservó"),
-    dato("Nombre", `${r.nombre} ${r.apellido}`),
-    dato("Correo", r.correo),
-    dato("Teléfono", r.telefono)
+    dato("Nombre ", `${r.nombre} ${r.apellido}`),
+    dato("Correo ", r.correo),
+    dato("Teléfono ", r.telefono)
   );
 
   const pago = el("div", "bloque-detalle");
   pago.appendChild(el("h3", "", "Pago"));
   if (r.monto) {
     pago.append(
-      dato("Método", r.metodo_pago),
-      dato("Monto", dinero(r.monto)),
-      dato("Fecha", fecha(r.fecha_pago))
+      dato("Método ", r.metodo_pago),
+      dato("Monto ", dinero(r.monto)),
+      dato("Fecha ", fecha(r.fecha_pago))
     );
   } else {
     pago.appendChild(el("p", "", "Sin pago registrado."));
